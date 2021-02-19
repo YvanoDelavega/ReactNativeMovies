@@ -76,7 +76,7 @@ export default function Search({ navigation }) {
 
   /* pour debug uniquement */
   useEffect(() => {
-    _searchText.current = "polo";
+    _searchText.current = "star";
     _searchFilms();
   }, [])
 
