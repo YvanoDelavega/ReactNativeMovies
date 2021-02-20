@@ -1,31 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
 import Search from "./Components/Search";
 // import Navigation from "./Navigation/Navigation";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import FilmDetail from './Components/FilmDetail';
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate("Details")}
-      />
-    </View>
-  );
-}
-
-function DetailsScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Details Screen</Text>
-    </View>
-  );
-}
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import FilmDetail from "./Components/FilmDetail";
+import { Provider } from "react-redux";
+import Store from "./Store/configureStore";
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -36,34 +18,30 @@ export default function App() {
     // </View>
     // <Search></Search>
     // <Navigation />
-    <NavigationContainer>
-      <Stack.Navigator>
-        {/* <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: "Overview" }}
-        />
-        <Stack.Screen name="Details" component={DetailsScreen} /> */}
-        <Stack.Screen
-          name="Search"
-          component={Search}
-          options={{ title: "Rechercher" }}
-        />
-        <Stack.Screen
-          name="FilmDetail"
-          component={FilmDetail}
-          options={{ title: "Détail du film" }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={Store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Search"
+            component={Search}
+            options={{ title: "Rechercher" }}
+          />
+          <Stack.Screen
+            name="FilmDetail"
+            component={FilmDetail}
+            options={{ title: "Détail du film" }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

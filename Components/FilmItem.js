@@ -2,8 +2,25 @@ import React from "react";
 import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import TMDBApi from "../API/TMDBApi";
 
-export default function FilmItem({ film, displayFilmDetail }) {
+export default function FilmItem({
+  film,
+  displayFilmDetail,
+  extraData,
+  isFilmFavori,
+  //favoriteFilms,
+}) {
   // console.log({ props.film });
+
+  const _displayFavoriteImage = () => {
+    //if (favoriteFilms && favoriteFilms.findIndex((f) => f.id === film.id) >= 0)
+    if (isFilmFavori)
+      return (
+        <Image
+          source={require("../Images/favorite.png")}
+          style={styles.favorite_image}
+        />
+      );
+  };
 
   return (
     <TouchableOpacity
@@ -17,6 +34,7 @@ export default function FilmItem({ film, displayFilmDetail }) {
 
       <View style={styles.data_container}>
         <View style={styles.header_container}>
+          {_displayFavoriteImage()}
           <Text style={styles.title_text}>{film.title}</Text>
           <Text style={styles.vote_text}>{film.vote_average}</Text>
         </View>
@@ -34,6 +52,7 @@ export default function FilmItem({ film, displayFilmDetail }) {
 }
 
 const styles = StyleSheet.create({
+  favorite_image: { width: 20, height: 20, margin: 5 },
   main_container: {
     flex: 1,
     marginTop: 4,

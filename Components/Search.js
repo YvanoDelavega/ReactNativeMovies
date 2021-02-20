@@ -11,8 +11,9 @@ import {
 //import films from "../Helpers/filmsData";
 import FilmItems from "./FilmItem";
 import API from "../API/TMDBApi";
+import { connect } from "react-redux";
 
-export default function Search({ navigation }) {
+function Search({ navigation, favoriteFilms }) {
   const [films, setFilms] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   let _searchText = useRef("");
@@ -66,7 +67,7 @@ export default function Search({ navigation }) {
 
   const _displayFilmDetail = (filmId) => {
     console.log("show detail " + filmId);
-    navigation.navigate("FilmDetail", { filmId:filmId });
+    navigation.navigate("FilmDetail", { filmId: filmId });
   };
 
   const onChangeSearchText = (text) => {
@@ -74,14 +75,17 @@ export default function Search({ navigation }) {
     setFilms([]);
   };
 
+
+
   /* pour debug uniquement */
   useEffect(() => {
     _searchText.current = "star";
     _searchFilms();
-  }, [])
+  }, []);
 
   return (
     <View style={styles.main_container}>
+      {console.log(favoriteFilms)}
       <TextInput
         onSubmitEditing={() => _searchFilms()}
         onChangeText={(text) => onChangeSearchText(text)}
@@ -104,6 +108,7 @@ export default function Search({ navigation }) {
       {console.log("render films")}
       <FlatList
         data={films}
+        extraData={favoriteFilms}
         // onEndReachedThreshold={0.5}
         // onEndReached={() => {
         //   console.log("endreached");
@@ -118,6 +123,10 @@ export default function Search({ navigation }) {
         renderItem={({ item }) => (
           <FilmItems
             film={item}
+            favoriteFilms={favoriteFilms}
+            isFilmFavori={
+              favoriteFilms.findIndex((film) => film.id === item.id) >= 0
+            }
             displayFilmDetail={_displayFilmDetail}
           ></FilmItems>
         )}
@@ -126,6 +135,16 @@ export default function Search({ navigation }) {
     </View>
   );
 }
+
+
+// On connecte le store Redux, ainsi que les films favoris du state de notre application, à notre component Search
+const mapStateToProps = state => {
+  return {
+    favoriteFilms: state.favoriteFilms,
+  };
+}
+
+export default connect(mapStateToProps)(Search)
 
 const styles = StyleSheet.create({
   main_container: {
