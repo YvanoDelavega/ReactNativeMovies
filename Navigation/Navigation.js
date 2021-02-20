@@ -1,14 +1,17 @@
-import Search from "./Components/Search";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-
-
-
+// import Search from "../Components/Search";
 // import { NavigationContainer } from "@react-navigation/native";
 // import {
-//   createStackNavigator,
-//   createAppContainer,
+//   createStackNavigator,createAppContainer,
+//   createBottomTabNavigator,
 // } from "@react-navigation/stack";
+
+
+
+// // import { NavigationContainer } from "@react-navigation/native";
+// // import {
+// //   createStackNavigator,
+// //   createAppContainer,
+// // } from "@react-navigation/stack";
 
 // const SearchStackNavigator = createStackNavigator({
 //   Search: {

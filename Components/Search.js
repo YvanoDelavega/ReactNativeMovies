@@ -9,9 +9,10 @@ import {
   ActivityIndicator,
 } from "react-native";
 //import films from "../Helpers/filmsData";
-import FilmItems from "./FilmItem";
+// import FilmItems from "./FilmItem";
 import API from "../API/TMDBApi";
 import { connect } from "react-redux";
+import FilmsList from "./FilmsList";
 
 function Search({ navigation, favoriteFilms }) {
   const [films, setFilms] = useState([]);
@@ -75,6 +76,14 @@ function Search({ navigation, favoriteFilms }) {
     setFilms([]);
   };
 
+  const _loadNextFilms = () => {
+    if (_page.current < _totalPages.current) _loadfilms();
+    else {
+      console.log(_page.current);
+      console.log(_totalPages.current);
+      console.log(_page.current < _totalPages.current);
+    }
+  };
 
 
   /* pour debug uniquement */
@@ -106,7 +115,15 @@ function Search({ navigation, favoriteFilms }) {
         onPress={() => Alert.alert("Button with adjusted color pressed")}
       />
       {console.log("render films")}
-      <FlatList
+
+      <FilmsList
+        films={films}
+        favoriteFilms={favoriteFilms}
+        navigation={navigation}
+        loadNextFilms={() => _loadNextFilms()}
+      ></FilmsList>
+
+      {/* <FlatList
         data={films}
         extraData={favoriteFilms}
         // onEndReachedThreshold={0.5}
@@ -130,21 +147,25 @@ function Search({ navigation, favoriteFilms }) {
             displayFilmDetail={_displayFilmDetail}
           ></FilmItems>
         )}
-      />
+      /> */}
       {_showLoading()}
     </View>
   );
+
+
+
 }
+
 
 
 // On connecte le store Redux, ainsi que les films favoris du state de notre application, à notre component Search
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     favoriteFilms: state.favoriteFilms,
   };
-}
+};
 
-export default connect(mapStateToProps)(Search)
+export default connect(mapStateToProps)(Search);
 
 const styles = StyleSheet.create({
   main_container: {
