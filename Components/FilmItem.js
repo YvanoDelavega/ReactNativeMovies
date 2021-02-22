@@ -1,5 +1,6 @@
 import React from "react";
 import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import FadeIn from "../Animations/Fadein";
 import TMDBApi from "../API/TMDBApi";
 
 export default function FilmItem({
@@ -23,31 +24,33 @@ export default function FilmItem({
   };
 
   return (
-    <TouchableOpacity
-      onPress={() => displayFilmDetail(film.id)}
-      style={styles.main_container}
-    >
-      <Image
-        style={styles.image}
-        source={{ uri: TMDBApi.GetImageUrlFromApi(film.poster_path) }}
-      ></Image>
+    <FadeIn>
+      <TouchableOpacity
+        onPress={() => displayFilmDetail(film.id)}
+        style={styles.main_container}
+      >
+        <Image
+          style={styles.image}
+          source={{ uri: TMDBApi.GetImageUrlFromApi(film.poster_path) }}
+        ></Image>
 
-      <View style={styles.data_container}>
-        <View style={styles.header_container}>
-          {_displayFavoriteImage()}
-          <Text style={styles.title_text}>{film.title}</Text>
-          <Text style={styles.vote_text}>{film.vote_average}</Text>
+        <View style={styles.data_container}>
+          <View style={styles.header_container}>
+            {_displayFavoriteImage()}
+            <Text style={styles.title_text}>{film.title}</Text>
+            <Text style={styles.vote_text}>{film.vote_average}</Text>
+          </View>
+          <View style={styles.description_container}>
+            <Text style={styles.description_text} numberOfLines={6}>
+              {film.overview}
+            </Text>
+          </View>
+          <View style={styles.date_container}>
+            <Text style={styles.date_text}>Sorti le {film.release_date}</Text>
+          </View>
         </View>
-        <View style={styles.description_container}>
-          <Text style={styles.description_text} numberOfLines={6}>
-            {film.overview}
-          </Text>
-        </View>
-        <View style={styles.date_container}>
-          <Text style={styles.date_text}>Sorti le {film.release_date}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </FadeIn>
   );
 }
 

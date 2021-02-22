@@ -21,7 +21,20 @@ function Home() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Search" component={Search} />
-      <Stack.Screen name="FilmDetail" component={FilmDetail} />
+      <Stack.Screen
+        name="FilmDetail"
+        component={FilmDetail}
+        // options={{
+        //   // headerTitle: (props) => <LogoTitle {...props} />,
+        //   headerRight: () => (
+        //     <Button
+        //       onPress={() => alert("This is a button!")}
+        //       title="Info"
+        //       color="#fff"
+        //     />
+        //   ),
+        // }}
+      />
     </Stack.Navigator>
   );
 }
@@ -30,7 +43,11 @@ function Favoris() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Favorites" component={Favorites} />
-      <Stack.Screen name="FilmDetail" component={FilmDetail} />
+      <Stack.Screen
+        name="FilmDetail"
+        component={FilmDetail}
+        
+      />
     </Stack.Navigator>
   );
 }
