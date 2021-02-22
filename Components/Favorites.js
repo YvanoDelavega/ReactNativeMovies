@@ -1,13 +1,14 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import FilmsList from "./FilmsList";
 import { connect } from "react-redux";
+import { FlatList } from "react-native-gesture-handler";
+import FilmItems from "./FilmItem";
 
 function Favorites({ navigation, favoriteFilms }) {
   return (
-    <View>
-      {/* {console.log(favoriteFilms)} */}
-      <Text>Mes favoris</Text>
+    <View style={styles.main_container}>
+      {/* <Text>Mes favoris</Text> */}
       <FilmsList
         films={favoriteFilms}
         favoriteFilms={favoriteFilms}
@@ -16,6 +17,13 @@ function Favorites({ navigation, favoriteFilms }) {
     </View>
   );
 }
+
+
+const styles = StyleSheet.create({
+  main_container: {
+    flex: 1,
+  },
+});
 
 // On connecte le store Redux, ainsi que les films favoris du state de notre application, à notre component Search
 const mapStateToProps = (state) => {

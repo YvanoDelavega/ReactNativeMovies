@@ -47,19 +47,15 @@ function FilmDetail({ route, navigation, favoriteFilms, dispatch }) {
 
   const _displayFavoriteImage = () => {
     const isInFavorite = favoriteFilms.findIndex((f) => f.id === film.id) >= 0;
-    const sourceImage = require("../Images/" + (isInFavorite
-      ? "favorite.png"
-      : "favorite_border.png"));
+    const sourceImage = isInFavorite
+      ? require("../Images/favorite.png")
+      : require("../Images/favorite_border.png");
     return <Image source={sourceImage} style={styles.favorite_image} />;
   };
 
-
-
   return (
-    <ScrollView style={styles.scrollview_container}>
-      {console.log("favoriteFilms")}
-      <View style={styles.image_container}>
-        {console.log(favoriteFilms)}
+    <ScrollView style={styles.scrollview_container}>      
+      <View style={styles.image_container}>       
         <Image
           style={styles.image}
           source={{ uri: API.GetImageUrlFromApi(film.backdrop_path) }}
@@ -67,12 +63,12 @@ function FilmDetail({ route, navigation, favoriteFilms, dispatch }) {
       </View>
       <View style={styles.main_container}>
         <Text style={styles.title}>{film.title}</Text>
-        
+
         <TouchableOpacity
           style={styles.favorite_container}
           onPress={() => _toggleFavorite()}
         >
-          <View style={styles.main_container}>{_displayFavoriteImage()}</View>
+          <View >{_displayFavoriteImage()}</View>
         </TouchableOpacity>
 
         <Text style={styles.description_text}>{film.overview}</Text>
@@ -138,7 +134,7 @@ const styles = StyleSheet.create({
   favorite_image: { width: 40, height: 40 },
   main_container: {
     flex: 1,
-    //  backgroundColor: "yellow",
+     // backgroundColor: "yellow",
     alignItems: "center",
     //marginTop: 20,
     // backgroundColor: "gray",

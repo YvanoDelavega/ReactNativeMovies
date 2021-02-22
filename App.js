@@ -10,6 +10,7 @@ import FilmDetail from "./Components/FilmDetail";
 import { Provider } from "react-redux";
 import Store from "./Store/configureStore";
 import Favorites from "./Components/Favorites";
+import Test from "./Components/Test";
 
 const Stack = createStackNavigator();
 
@@ -60,21 +61,19 @@ export default function App() {
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
+              let source;
 
-              if (route.name === "Home") {
-                iconName = focused ? "search.png" : "search.png";
+              if (route.name === "Home" || route.name === "Test") {
+                source = focused ? require("./Images/search.png") : require("./Images/search.png");
               } else if (route.name === "Favoris") {
-                iconName = focused ? "favorite.png" : "favorite_border.png";
+                source = focused
+                  ? require("./Images/favorite.png")
+                  : require("./Images/favorite_border.png");
               }
 
               // You can return any component that you like here!
               // return <Ionicons name={iconName} size={size} color={color} />;
-              return (
-                <Image
-                  source={require("./Images/" + iconName)}
-                  style={styles.icon}
-                />
-              );
+              return <Image source={source} style={styles.icon} />;
             },
           })}
           tabBarOptions={{
@@ -86,6 +85,12 @@ export default function App() {
             // showIcon: false, // On informe le TabNavigator qu'on souhaite afficher les icônes définis
           }}
         >
+          {/* <TabNav.Screen
+            name="Test"
+            component={Test}
+            options={{ title: "Rechercher" }}
+          /> */}
+
           <TabNav.Screen
             name="Home"
             component={Home}
