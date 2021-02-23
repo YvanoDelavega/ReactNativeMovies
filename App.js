@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+//import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
 import Search from "./Components/Search";
@@ -11,6 +11,8 @@ import { Provider } from "react-redux";
 import Store from "./Store/configureStore";
 import Favorites from "./Components/Favorites";
 import Test from "./Components/Test";
+import {persistStore} from 'redux-persist';
+import {PersistGate} from 'redux-persist/es/integration/react';
 
 const Stack = createStackNavigator();
 
@@ -52,6 +54,8 @@ function Favoris() {
   );
 }
 
+let persistor = persistStore(Store);
+
 export default function App() {
   return (
     // <View style={styles.container}>
@@ -61,8 +65,9 @@ export default function App() {
     // <Search></Search>
     // <Navigation />
     <Provider store={Store}>
-      <NavigationContainer>
-        {/* <Stack.Navigator>
+      <PersistGate persistor={persistor}>
+        <NavigationContainer>
+          {/* <Stack.Navigator>
           <TabNav.Screen
             name="Search"
             component={Search}
@@ -74,53 +79,55 @@ export default function App() {
             options={{ title: "Détail du film" }}
           />
         </Stack.Navigator> */}
-        <TabNav.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
-              let source;
+          <TabNav.Navigator
+            screenOptions={({route}) => ({
+              tabBarIcon: ({focused, color, size}) => {
+                let iconName;
+                let source;
 
-              if (route.name === "Home" || route.name === "Test") {
-                source = focused ? require("./Images/search.png") : require("./Images/search.png");
-              } else if (route.name === "Favoris") {
-                source = focused
-                  ? require("./Images/favorite.png")
-                  : require("./Images/favorite_border.png");
-              }
+                if (route.name === 'Home' || route.name === 'Test') {
+                  source = focused
+                    ? require('./Images/search.png')
+                    : require('./Images/search.png');
+                } else if (route.name === 'Favoris') {
+                  source = focused
+                    ? require('./Images/favorite.png')
+                    : require('./Images/favorite_border.png');
+                }
 
-              // You can return any component that you like here!
-              // return <Ionicons name={iconName} size={size} color={color} />;
-              return <Image source={source} style={styles.icon} />;
-            },
-          })}
-          tabBarOptions={{
-            activeTintColor: "tomato",
-            inactiveTintColor: "gray",
-            activeBackgroundColor: "#DDDDDD", // Couleur d'arrière-plan de l'onglet sélectionné
-            inactiveBackgroundColor: "#FFFFFF", // Couleur d'arrière-plan des onglets non sélectionnés
-            showLabel: false, // On masque les titres
-            // showIcon: false, // On informe le TabNavigator qu'on souhaite afficher les icônes définis
-          }}
-        >
-          {/* <TabNav.Screen
+                // You can return any component that you like here!
+                // return <Ionicons name={iconName} size={size} color={color} />;
+                return <Image source={source} style={styles.icon} />;
+              },
+            })}
+            tabBarOptions={{
+              activeTintColor: 'tomato',
+              inactiveTintColor: 'gray',
+              activeBackgroundColor: '#DDDDDD', // Couleur d'arrière-plan de l'onglet sélectionné
+              inactiveBackgroundColor: '#FFFFFF', // Couleur d'arrière-plan des onglets non sélectionnés
+              showLabel: false, // On masque les titres
+              // showIcon: false, // On informe le TabNavigator qu'on souhaite afficher les icônes définis
+            }}>
+            {/* <TabNav.Screen
             name="Test"
             component={Test}
             options={{ title: "Rechercher" }}
           /> */}
 
-          <TabNav.Screen
-            name="Home"
-            component={Home}
-            options={{ title: "Rechercher" }}
-          />
+            <TabNav.Screen
+              name="Home"
+              component={Home}
+              options={{title: 'Rechercher'}}
+            />
 
-          <TabNav.Screen
-            name="Favoris"
-            component={Favoris}
-            options={{ showLabel: false, title: "Mes favoris" }}
-          />
-        </TabNav.Navigator>
-      </NavigationContainer>
+            <TabNav.Screen
+              name="Favoris"
+              component={Favoris}
+              options={{showLabel: false, title: 'Mes favoris'}}
+            />
+          </TabNav.Navigator>
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 }

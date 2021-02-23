@@ -14,6 +14,7 @@ class FadeIn extends React.Component {
   componentDidMount() {
     Animated.spring(this.state.positionLeft, {
       toValue: 0,
+      useNativeDriver: false, // Add this line
     }).start();
   }
 

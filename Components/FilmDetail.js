@@ -190,7 +190,7 @@ Cela revient exactement au même que ce que l'on a fait avec la constante  mapSt
 Ce n'est pas du tout le cas ici. On connecte le state de l'application avec les props du component FilmDetail. */
 const mapStateToProps = (state) => {
   //return state -> connecterai tout le state global, mais nous on ne veux que les filmfavoris
-  return { favoriteFilms: state.favoriteFilms };
+  return {favoriteFilms: state.tooggleFavoriteReducer.favoriteFilms};
 };
 export default connect(mapStateToProps)(FilmDetail);
 

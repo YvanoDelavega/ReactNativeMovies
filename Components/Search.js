@@ -161,7 +161,7 @@ function Search({ navigation, favoriteFilms }) {
 // On connecte le store Redux, ainsi que les films favoris du state de notre application, à notre component Search
 const mapStateToProps = (state) => {
   return {
-    favoriteFilms: state.favoriteFilms,
+    favoriteFilms: state.tooggleFavoriteReducer.favoriteFilms,
   };
 };
 
